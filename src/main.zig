@@ -53,6 +53,8 @@ pub fn main() !void {
                     gs.moveLeft();
                 } else if (in.eqlDescription("arrow-right") or in.eqlDescription("d")) {
                     gs.moveRight();
+                } else if (in.eqlDescription("arrow-up") or in.eqlDescription("space")) {
+                    gs.moveJump();
                 }
             }
         } else {

@@ -28,6 +28,11 @@ pub const Brother = struct {
             _ = try rc.buffer.writer().write(line);
         }
     }
+    pub fn moveJump(self: *Brother) void {
+        if (self.dy == 0) { // no double jumps! TODO allow kicks off the wall
+            self.dy -= 4 / (1000 / 60.0);
+        }
+    }
     pub fn moveLeft(self: *Brother) void {
         self.dx -= 5 / (1000 / 60.0);
         self.moveDuration = 24;
@@ -37,6 +42,7 @@ pub const Brother = struct {
         self.moveDuration = 24;
     }
     pub fn step(self: *Brother) void {
+        // Horizontal movement
         const x = self.x + self.dx;
         const ll = leftLimit[@enumToInt(self.side)];
         const rl = rightLimit[@enumToInt(self.side)];
@@ -56,6 +62,17 @@ pub const Brother = struct {
                     self.dx = 0;
                 }
             }
+        }
+        // Vertical movement
+        const y = self.y + self.dy;
+        if (y < 12) { // jumping
+            self.y = 12;
+            self.dy = -self.dy;
+        } else if (y > 17) { // falling
+            self.y = 17;
+            self.dy = 0;
+        } else {
+            self.y = y;
         }
     }
     pub fn reset(self: *Brother, side: ?Side) void {

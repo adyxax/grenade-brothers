@@ -12,6 +12,9 @@ pub const Game = struct {
         try self.brothers[0].draw(rc);
         try self.brothers[1].draw(rc);
     }
+    pub fn moveJump(self: *Game) void {
+        self.brothers[@enumToInt(self.side)].moveJump();
+    }
     pub fn moveLeft(self: *Game) void {
         self.brothers[@enumToInt(self.side)].moveLeft();
     }
