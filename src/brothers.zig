@@ -8,8 +8,8 @@ pub const Side = enum(u1) {
 
 const startingX = [2]f64{ 15, 60 };
 const colors = [2]spoon.Attribute.Colour{ .blue, .red };
-const leftLimit = [2]f64{ 1, 40 };
-const rightLimit = [2]f64{ 33, 74 }; // (38, 79) minus a brother's width
+const leftLimit = [2]f64{ 1, 41 };
+const rightLimit = [2]f64{ 34, 74 }; // (38, 79) minus a brother's width
 
 pub const Brother = struct {
     side: Side,
