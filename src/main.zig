@@ -49,12 +49,18 @@ pub fn main() !void {
                 if (in.eqlDescription("escape") or in.eqlDescription("q")) {
                     done = true;
                     break;
-                } else if (in.eqlDescription("arrow-left") or in.eqlDescription("a")) {
-                    gs.moveLeft();
-                } else if (in.eqlDescription("arrow-right") or in.eqlDescription("d")) {
-                    gs.moveRight();
-                } else if (in.eqlDescription("arrow-up") or in.eqlDescription("space")) {
-                    gs.moveJump();
+                } else if (in.eqlDescription("arrow-left")) {
+                    gs.moveLeft(.right);
+                } else if (in.eqlDescription("arrow-right")) {
+                    gs.moveRight(.right);
+                } else if (in.eqlDescription("arrow-up")) {
+                    gs.moveJump(.right);
+                } else if (in.eqlDescription("a")) {
+                    gs.moveLeft(.left);
+                } else if (in.eqlDescription("d")) {
+                    gs.moveRight(.left);
+                } else if (in.eqlDescription("space")) {
+                    gs.moveJump(.left);
                 }
             }
         } else {

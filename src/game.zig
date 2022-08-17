@@ -12,22 +12,22 @@ pub const Game = struct {
         try self.brothers[0].draw(rc);
         try self.brothers[1].draw(rc);
     }
-    pub fn moveJump(self: *Game) void {
-        self.brothers[@enumToInt(self.side)].moveJump();
+    pub fn moveJump(self: *Game, side: brothers.Side) void {
+        self.brothers[@enumToInt(side)].moveJump();
     }
-    pub fn moveLeft(self: *Game) void {
-        self.brothers[@enumToInt(self.side)].moveLeft();
+    pub fn moveLeft(self: *Game, side: brothers.Side) void {
+        self.brothers[@enumToInt(side)].moveLeft();
     }
-    pub fn moveRight(self: *Game) void {
-        self.brothers[@enumToInt(self.side)].moveRight();
+    pub fn moveRight(self: *Game, side: brothers.Side) void {
+        self.brothers[@enumToInt(side)].moveRight();
     }
     pub fn reset(self: *Game, side: brothers.Side) void {
         self.side = side;
         self.resetRound();
     }
     pub fn resetRound(self: *Game) void {
-        self.brothers[0].reset(brothers.Side.left);
-        self.brothers[1].reset(brothers.Side.right);
+        self.brothers[0].reset(.left);
+        self.brothers[1].reset(.right);
     }
     pub fn step(self: *Game) void {
         self.brothers[0].step();
