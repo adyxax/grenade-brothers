@@ -1,6 +1,8 @@
 const std = @import("std");
 const spoon = @import("spoon");
 
+const ball = @import("ball.zig");
+
 pub const Side = enum(u1) {
     left,
     right,
@@ -41,7 +43,7 @@ pub const Brother = struct {
         self.dx += 5 / (1000 / 60.0);
         self.moveDuration = 24;
     }
-    pub fn step(self: *Brother) void {
+    pub fn step(self: *Brother, b: *ball.Ball) void {
         // Horizontal movement
         const x = self.x + self.dx;
         const ll = leftLimit[@enumToInt(self.side)];
@@ -73,6 +75,33 @@ pub const Brother = struct {
             self.dy = 0;
         } else {
             self.y = y;
+        }
+        // Check for ball collisions
+        if (b.y >= y and b.y <= y + 2 and b.x >= x and b.x < x + 5) {
+            if (b.dy > 0) {
+                b.dy = -b.dy / 1.5;
+            }
+            b.dx = b.dx / 2.0;
+            var strength: f64 = 1;
+            if (b.dx > 0 and self.dx < 0)
+                strength *= 2; // moving in opposite directions
+            if (y < 12) { // jumping
+                strength *= 2;
+            }
+            if (b.x < x + 1) {
+                b.dx -= strength * 4 / (1000 / 60.0);
+            } else if (b.x < x + 2) {
+                b.dx -= strength * 2 / (1000 / 60.0);
+            } else if (b.x < x + 3) {
+                var modifier: f64 = 1;
+                if (self.side == .left) modifier = -1;
+                b.dx += modifier * strength * 2 / (1000 / 60.0);
+            } else if (b.x < x + 4) {
+                b.dx += strength * 2 / (1000 / 60.0);
+            } else {
+                b.dx += strength * 4 / (1000 / 60.0);
+            }
+            b.dy = b.dy * strength - 0.04;
         }
     }
     pub fn reset(self: *Brother, side: ?Side) void {
