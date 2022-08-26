@@ -15,6 +15,7 @@ const rightLimit = [2]f64{ 34, 74 }; // (38, 79) minus a brother's width
 
 pub const Brother = struct {
     side: Side,
+    score: u8,
     x: f64,
     y: f64,
     dx: f64,
@@ -42,6 +43,17 @@ pub const Brother = struct {
     pub fn moveRight(self: *Brother) void {
         self.dx += 5 / (1000 / 60.0);
         self.moveDuration = 24;
+    }
+    pub fn reset(self: *Brother, side: Side) void {
+        self.side = side;
+        self.score = 0;
+    }
+    pub fn resetRound(self: *Brother) void {
+        self.x = startingX[@enumToInt(self.side)];
+        self.y = 17;
+        self.dx = 0;
+        self.dy = 0;
+        self.moveDuration = 0;
     }
     pub fn step(self: *Brother, b: *ball.Ball) void {
         // Horizontal movement
@@ -103,16 +115,6 @@ pub const Brother = struct {
             }
             b.dy = b.dy * strength - 0.04;
         }
-    }
-    pub fn reset(self: *Brother, side: ?Side) void {
-        if (side) |s| {
-            self.side = s;
-        }
-        self.x = startingX[@enumToInt(self.side)];
-        self.y = 17;
-        self.dx = 0;
-        self.dy = 0;
-        self.moveDuration = 0;
     }
 };
 

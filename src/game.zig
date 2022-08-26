@@ -14,6 +14,13 @@ pub const Game = struct {
         try self.brothers[0].draw(rc);
         try self.brothers[1].draw(rc);
         try self.ball.draw(rc);
+        var score: [1]u8 = undefined;
+        try rc.moveCursorTo(1, 3);
+        score[0] = '0' + self.brothers[0].score;
+        _ = try rc.buffer.writer().write(score[0..]);
+        try rc.moveCursorTo(1, 76);
+        score[0] = '0' + self.brothers[1].score;
+        _ = try rc.buffer.writer().write(score[0..]);
     }
     pub fn moveJump(self: *Game, side: brothers.Side) void {
         self.brothers[@enumToInt(side)].moveJump();
