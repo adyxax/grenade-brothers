@@ -33,12 +33,14 @@ pub const Game = struct {
     }
     pub fn reset(self: *Game, side: brothers.Side) void {
         self.side = side;
+        self.brothers[0].reset(.left);
+        self.brothers[1].reset(.right);
         self.resetRound();
     }
     pub fn resetRound(self: *Game) void {
         self.ball.reset(.left);
-        self.brothers[0].reset(.left);
-        self.brothers[1].reset(.right);
+        self.brothers[0].resetRound();
+        self.brothers[1].resetRound();
     }
     pub fn step(self: *Game) void {
         self.ball.step();
