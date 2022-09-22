@@ -11,5 +11,6 @@ export fn start() void {
 }
 
 export fn update() void {
+    Game.update();
     Game.draw();
 }

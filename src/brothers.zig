@@ -1,3 +1,4 @@
+const inputs = @import("inputs.zig");
 const std = @import("std");
 const utils = @import("utils.zig");
 const w4 = @import("wasm4.zig");
@@ -5,8 +6,10 @@ const w4 = @import("wasm4.zig");
 pub const Brother = struct {
     side: utils.side,
     score: u8,
+    // position of the bottom left corner
     x: u8,
     y: f64,
+    vy: f64,
     pub fn draw(self: Brother) void {
         var y = @floatToInt(u8, std.math.round(self.y));
         w4.DRAW_COLORS.* = 0x30;
@@ -19,6 +22,12 @@ pub const Brother = struct {
     pub fn resetRound(self: *Brother) void {
         self.x = utils.startingX[@enumToInt(self.side)];
         self.y = 160;
+    }
+    pub fn update(self: *Brother, gamepad: inputs.Gamepad) void {
+        if (gamepad.held.left and self.x > utils.leftLimit[@enumToInt(self.side)])
+            self.x -= 1;
+        if (gamepad.held.right and self.x <= utils.rightLimit[@enumToInt(self.side)] - brother_width)
+            self.x += 1;
     }
 };
 
