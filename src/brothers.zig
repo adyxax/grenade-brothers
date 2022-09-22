@@ -28,6 +28,15 @@ pub const Brother = struct {
             self.x -= 1;
         if (gamepad.held.right and self.x <= utils.rightLimit[@enumToInt(self.side)] - brother_width)
             self.x += 1;
+        if (self.y < 160) { // jumping!
+            self.vy += utils.gravity;
+            self.y += self.vy * utils.frequency;
+            if (self.y > 160)
+                self.y = 160;
+        } else if (gamepad.pressed.up) {
+            self.vy = -200;
+            self.y += self.vy * utils.frequency;
+        }
     }
 };
 

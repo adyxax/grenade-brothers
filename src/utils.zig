@@ -1,6 +1,7 @@
 //----- Physics ---------------------------------------------------------------
 pub const gravity: f64 = 9.807; // m/s²
-pub const scale: f64 = 1.0 / 30; // 30 pixels == 1m
+pub const scale: f64 = 1.0 / 30.0; // 30 pixels == 1m
+pub const frequency: f64 = 1.0 / 60.0; // 60 fps
 
 //----- Playground ------------------------------------------------------------
 pub const side = enum(u1) {
