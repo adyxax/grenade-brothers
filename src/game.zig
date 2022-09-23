@@ -12,9 +12,9 @@ pub const Game = struct {
     playerSide: utils.side = undefined,
 
     pub fn draw(self: *Game) void {
-        self.ball.draw();
         self.brothers[0].draw();
         self.brothers[1].draw();
+        self.ball.draw();
         // draw the net
         w4.DRAW_COLORS.* = 0x42;
         w4.rect(78, 100, 4, 61);
@@ -34,5 +34,6 @@ pub const Game = struct {
         self.gamepads[1].update(w4.GAMEPAD2.*);
         self.brothers[0].update(self.gamepads[0]);
         self.brothers[1].update(self.gamepads[1]);
+        self.ball.update();
     }
 };
