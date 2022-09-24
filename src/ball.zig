@@ -41,6 +41,20 @@ pub const Ball = struct {
             self.vy = 0;
             self.y = 160 - ball_height;
         }
+        // Net collision
+        var x1: f64 = 78 - ball_width;
+        var x2: f64 = 82;
+        var y1: f64 = 100 - ball_height;
+        var y2: f64 = 160;
+        if (self.x >= x1 and self.x < x2 and self.y >= y1 and self.y < y2) {
+            if (self.vx > 0) {
+                self.x = x1;
+            } else {
+                self.x = x2;
+            }
+            self.vx = -self.vx;
+        }
+        // TODO collision with top of the net?
     }
 };
 
