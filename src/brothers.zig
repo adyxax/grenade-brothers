@@ -1,3 +1,4 @@
+const ball = @import("ball.zig");
 const inputs = @import("inputs.zig");
 const std = @import("std");
 const utils = @import("utils.zig");
@@ -10,6 +11,25 @@ pub const Brother = struct {
     x: u8,
     y: f64,
     vy: f64,
+    pub fn collide(self: Brother, b: *ball.Ball) void {
+        // compute the collision box
+        const x1: f64 = @intToFloat(f64, self.x) - ball.ball_width;
+        const x2: f64 = @intToFloat(f64, self.x) + brother_width;
+        const y1: f64 = self.y - brother_height - ball.ball_height;
+        const y2: f64 = self.y - brother_height;
+        if (b.x >= x1 and b.x < x2 and b.y >= y1 and b.y < y2) {
+            // horizontal adjustement
+            b.vx += (b.x - @intToFloat(f64, self.x) - 4) * 10;
+            // vertical adjustment
+            if (b.vy > 0) {
+                b.vy = -b.vy * utils.bounce;
+                if (self.vy < 0)
+                    b.vy *= 2;
+            }
+            b.vy -= 22;
+            b.y = y1;
+        }
+    }
     pub fn draw(self: Brother) void {
         var y = @floatToInt(u8, std.math.round(self.y));
         w4.DRAW_COLORS.* = 0x30;

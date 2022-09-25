@@ -35,5 +35,7 @@ pub const Game = struct {
         self.brothers[0].update(self.gamepads[0]);
         self.brothers[1].update(self.gamepads[1]);
         self.ball.update();
+        self.brothers[0].collide(&self.ball);
+        self.brothers[1].collide(&self.ball);
     }
 };

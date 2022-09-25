@@ -59,7 +59,7 @@ pub const Ball = struct {
 };
 
 //----- Sprite ----------------------------------------------------------------
-const ball_width = 8;
-const ball_height = 8;
+pub const ball_width = 8;
+pub const ball_height = 8;
 const ball_flags = 1; // BLIT_2BPP
 const ball = [16]u8{ 0x1a, 0xa4, 0x6f, 0xf9, 0xbf, 0xae, 0xbf, 0xae, 0xbf, 0xfe, 0xbf, 0xfe, 0x6f, 0xf9, 0x1a, 0xa4 };
