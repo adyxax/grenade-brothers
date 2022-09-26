@@ -34,6 +34,14 @@ pub const Brother = struct {
         var y = @floatToInt(u8, std.math.round(self.y));
         w4.DRAW_COLORS.* = 0x30;
         w4.blit(&brother, self.x, y - brother_height, brother_width, brother_height, brother_flags);
+        var buf: [3]u8 = undefined;
+        w4.DRAW_COLORS.* = 0x32;
+        _ = std.fmt.formatIntBuf(&buf, self.score, 10, .lower, .{ .width = 3 });
+        if (self.side == .left) {
+            w4.text(buf[0..], 0, 0);
+        } else {
+            w4.text(buf[0..], 136, 0);
+        }
     }
     pub fn reset(self: *Brother, side: utils.side) void {
         self.side = side;
