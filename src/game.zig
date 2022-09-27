@@ -18,6 +18,14 @@ pub const Game = struct {
         // draw the net
         w4.DRAW_COLORS.* = 0x42;
         w4.rect(78, 100, 4, 61);
+        // Did someone win?
+        if (self.ball.y >= 160 - ball.ball_height) {
+            if (self.ball.x >= 80) {
+                w4.text("Scored!", 8, 64);
+            } else {
+                w4.text("Scored!", 160 - 56 - 8, 64);
+            }
+        }
     }
     pub fn reset(self: *Game) void {
         self.brothers[0].reset(.left);
