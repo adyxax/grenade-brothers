@@ -41,20 +41,50 @@ pub const Ball = struct {
             self.vy = 0;
             self.y = 160 - ball_height;
         }
-        // Net collision
+        // Net collision left
         var x1: f64 = 78 - ball_width;
-        var x2: f64 = 82;
-        var y1: f64 = 100 - ball_height;
+        var x2: f64 = 82 - ball_width;
+        var y1: f64 = 100;
         var y2: f64 = 160;
-        if (self.x >= x1 and self.x < x2 and self.y >= y1 and self.y < y2) {
-            if (self.vx > 0) {
+        if (self.vx > 0 and self.x >= x1 and self.x < x2 and self.y >= y1 and self.y < y2) {
+            self.vx = -self.vx * utils.bounce;
+            self.x = x1;
+        }
+        // Net collision right
+        x1 = 78;
+        x2 = 82;
+        y1 = 100;
+        y2 = 160;
+        if (self.vx < 0 and self.x >= x1 and self.x < x2 and self.y >= y1 and self.y < y2) {
+            self.vx = -self.vx * utils.bounce;
+            self.x = x2;
+        }
+        // Net collision top and top left
+        x1 = 78 - ball_width;
+        x2 = 81;
+        y1 = 100 - ball_height;
+        y2 = 100;
+        if (self.vx > 0 and self.vy > 0 and self.x >= x1 and self.x < x2 and self.y >= y1 and self.y < y2) {
+            self.vy = -self.vy * utils.bounce;
+            self.y = y1;
+            if (self.x < 79 - ball_width) {
+                self.vx = -self.vx * utils.bounce;
                 self.x = x1;
-            } else {
+            }
+        }
+        // Net collision top and top right
+        x1 = 78 - ball_width;
+        x2 = 82;
+        y1 = 100 - ball_height;
+        y2 = 100;
+        if (self.vx < 0 and self.vy > 0 and self.x >= x1 and self.x < x2 and self.y >= y1 and self.y < y2) {
+            self.vy = -self.vy * utils.bounce;
+            self.y = y1;
+            if (self.x > 81) {
+                self.vx = -self.vx * utils.bounce;
                 self.x = x2;
             }
-            self.vx = -self.vx;
         }
-        // TODO collision with top of the net?
     }
 };
 
