@@ -20,7 +20,7 @@ pub const Ball = struct {
         self.vx = 0;
         self.vy = -250;
     }
-    pub fn update(self: *Ball) void {
+    pub fn update(self: *Ball) ?utils.side {
         self.vy += utils.gravity;
         self.x += self.vx * utils.frequency;
         self.y += self.vy * utils.frequency;
@@ -40,6 +40,11 @@ pub const Ball = struct {
         if (self.y >= 160 - ball_height) { // floor
             self.vy = 0;
             self.y = 160 - ball_height;
+            if (self.x <= 80) {
+                return .left;
+            } else {
+                return .right;
+            }
         }
         // Net collision left
         var x1: f64 = 78 - ball_width;
@@ -85,6 +90,7 @@ pub const Ball = struct {
                 self.x = x2;
             }
         }
+        return null;
     }
 };
 

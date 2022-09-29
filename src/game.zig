@@ -37,13 +37,22 @@ pub const Game = struct {
         self.brothers[0].resetRound();
         self.brothers[1].resetRound();
     }
-    pub fn update(self: *Game) void {
+    pub fn update(self: *Game) bool {
         self.gamepads[0].update(w4.GAMEPAD1.*);
         self.gamepads[1].update(w4.GAMEPAD2.*);
         self.brothers[0].update(self.gamepads[0]);
         self.brothers[1].update(self.gamepads[1]);
-        self.ball.update();
+        const finished = self.ball.update();
         self.brothers[0].collide(&self.ball);
         self.brothers[1].collide(&self.ball);
+        if (finished) |side| {
+            if (side == .left) {
+                self.brothers[1].score += 1;
+            } else {
+                self.brothers[0].score += 1;
+            }
+            return true;
+        }
+        return false;
     }
 };
