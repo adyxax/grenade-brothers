@@ -33,7 +33,11 @@ pub const Game = struct {
         self.resetRound();
     }
     pub fn resetRound(self: *Game) void {
-        self.ball.resetRound(.left);
+        if ((self.brothers[0].score + self.brothers[1].score) % 2 == 0) {
+            self.ball.resetRound(.left);
+        } else {
+            self.ball.resetRound(.right);
+        }
         self.brothers[0].resetRound();
         self.brothers[1].resetRound();
     }
