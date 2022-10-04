@@ -61,7 +61,7 @@ pub const Brother = struct {
             self.y += self.vy * utils.frequency;
             if (self.y > 160)
                 self.y = 160;
-        } else if (gamepad.pressed.up) {
+        } else if (gamepad.pressed.up or gamepad.pressed.x) {
             self.vy = -200;
             self.y += self.vy * utils.frequency;
         }
