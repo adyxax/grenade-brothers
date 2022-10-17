@@ -50,6 +50,7 @@ pub const Brother = struct {
     pub fn resetRound(self: *Brother) void {
         self.x = utils.startingX[@enumToInt(self.side)];
         self.y = 160;
+        self.vy = 0;
     }
     pub fn update(self: *Brother, gamepad: inputs.Gamepad) void {
         if (gamepad.held.left and self.x > utils.leftLimit[@enumToInt(self.side)])

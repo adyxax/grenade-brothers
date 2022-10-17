@@ -18,6 +18,11 @@ pub const Gamepad = struct {
     pressed: Buttons = .{},
     released: Buttons = .{},
 
+    pub fn reset(self: *Gamepad) void {
+        self.held = @bitCast(Buttons, @bitCast(u8, self.held) ^ @bitCast(u8, self.held));
+        self.pressed = @bitCast(Buttons, @bitCast(u8, self.pressed) ^ @bitCast(u8, self.pressed));
+        self.released = @bitCast(Buttons, @bitCast(u8, self.released) ^ @bitCast(u8, self.released));
+    }
     pub fn update(self: *Gamepad, buttons: u8) void {
         var previous = @bitCast(u8, self.held);
         self.held = @bitCast(Buttons, buttons);

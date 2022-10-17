@@ -40,6 +40,8 @@ pub const Game = struct {
         }
         self.brothers[0].resetRound();
         self.brothers[1].resetRound();
+        self.gamepads[0].reset();
+        self.gamepads[1].reset();
     }
     pub fn update(self: *Game) bool {
         self.gamepads[0].update(w4.GAMEPAD1.*);
