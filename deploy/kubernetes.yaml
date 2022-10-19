@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: grenade-brothers
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: grenade-brothers
+  name: grenade-brothers
+  labels:
+    app: grenade-brothers
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: grenade-brothers
+  template:
+    metadata:
+      labels:
+        app: grenade-brothers
+    spec:
+      containers:
+      - name: grenade-brothers
+        image: quay.io/adyxax/grenade-brothers:08da31f2e79f87a93281afe8f13eaa700d57708a
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: '/'
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: '/'
+            port: 80
+          initialDelaySeconds: 1
+          timeoutSeconds: 1
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 10"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: grenade-brothers
+  name: grenade-brothers
+spec:
+  type: ClusterIP
+  selector:
+    app: grenade-brothers
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: grenade-brothers
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: grenade-brothers
+  name: grenade-brothers
+spec:
+  ingressClassName: nginx
+  tls:
+  - secretName: wildcard-adyxax-org
+  rules:
+  - host: grenade-brothers.adyxax.org
+    http:
+      paths:
+      - path: '/'
+        pathType: Prefix
+        backend:
+          service:
+            name: grenade-brothers
+            port:
+              number: 80
