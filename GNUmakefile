@@ -27,8 +27,12 @@ init: ## make init	# initialize project dependencies
 push: ## make push	# push the built image to quay.io
 	buildah push adyxax/grenade-brothers quay.io/adyxax/grenade-brothers:$(REVISION)
 
+.PHONY: run
+run: ## make run	# run a nodejs web server
+	node_modules/.bin/w4 run --port 80 --no-open --no-qr zig-out/lib/cart.wasm
+
 .PHONY: serve
-serve: ## make serve	# run a nodejs web server
+serve: ## make serve	# run a nodejs development web server that watches the code file and recompiles upon changes
 	node_modules/.bin/w4 watch --no-open --no-qr
 
 .DEFAULT_GOAL := help
