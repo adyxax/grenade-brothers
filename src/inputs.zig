@@ -6,7 +6,7 @@ const w4 = @import("wasm4.zig");
 pub const Buttons = packed struct {
     x: bool = false,
     y: bool = false,
-    _: u2,
+    _: u2 = 0,
     left: bool = false,
     right: bool = false,
     up: bool = false,
