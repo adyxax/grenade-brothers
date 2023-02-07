@@ -4,9 +4,9 @@ Since [learning zig](https://www.adyxax.org/blog/2022/08/22/learning-the-zig-pro
 
 ## Dependencies
 
-zig is required. Only zig version >= 0.10.0 on linux amd64 (Gentoo) is being regularly tested.
+zig is required. Only zig version >= 0.10.1 on linux amd64 (Gentoo) is being regularly tested.
 
-On top of that the wasm4 runtime (which I installed from npm) is required, version >= 2.5.3.
+On top of that the wasm4 runtime (which I installed from npm) is required, version >= 2.5.4.
 
 ## Quick start
 
